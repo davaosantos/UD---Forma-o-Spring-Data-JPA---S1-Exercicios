@@ -1,18 +1,14 @@
 package com.mballem.tarefas.jpa.dao;
 
 import com.mballem.tarefas.jpa.domain.Aluno;
-import com.mballem.tarefas.jpa.domain.AlunoRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Repository
-public class AlunoDao {
+public class AlunoDAO {
 
     @PersistenceContext // Classe para injeção de um EntityManager
     private EntityManager manager;
@@ -79,7 +75,12 @@ public class AlunoDao {
      */
     public Aluno findByNumeroArmario(Integer numero) {
 
-        return null;
+        String query = "select a from Aluno a "
+                + "where a.armario.numero = :numero";
+
+        return this.manager.createQuery(query, Aluno.class)
+                .setParameter("numero", numero)
+                .getSingleResult();
     }
 
     /**
@@ -87,7 +88,14 @@ public class AlunoDao {
      */
     public List<Long> findByNumerosDeArmarios(List<Integer> numeros) {
 
-        return null;
+        String query = """
+                select a.id from Aluno a
+                where a.armario.numero in (:numeros)
+                """;
+
+        return this.manager.createQuery(query, Long.class)
+                .setParameter("numeros", numeros)
+                .getResultList();
     }
 
     /**
