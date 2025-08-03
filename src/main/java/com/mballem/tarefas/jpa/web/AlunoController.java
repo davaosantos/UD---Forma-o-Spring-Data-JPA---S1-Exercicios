@@ -1,6 +1,6 @@
 package com.mballem.tarefas.jpa.web;
 
-import com.mballem.tarefas.jpa.dao.AlunoDao;
+import com.mballem.tarefas.jpa.dao.AlunoDAO;
 import com.mballem.tarefas.jpa.domain.Aluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class AlunoController {
     @Autowired
-    private AlunoDao dao;
+    private AlunoDAO dao;
 
     @GetMapping(path = "alunos/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Aluno getByNomeCompleto(@PathVariable String nome) {
