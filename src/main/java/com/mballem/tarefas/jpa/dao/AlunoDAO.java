@@ -103,7 +103,18 @@ public class AlunoDAO {
      */
     public Aluno updateNomeById(String matricula, String nome) {
 
-        return null;
+        String query = """
+                select a from Aluno a 
+                where a.matricula like :matricula
+                """;
+
+        Aluno alunoPersistent = this.manager.createQuery(query, Aluno.class)
+                .setParameter("matricula", matricula)
+                .getSingleResult();
+
+        alunoPersistent.setNome(nome);
+
+        return alunoPersistent;
     }
 
     /**
