@@ -1,6 +1,7 @@
 package com.mballem.tarefas.jpa.dao;
 
 import com.mballem.tarefas.jpa.domain.Aluno;
+import com.mballem.tarefas.jpa.dto.AlunoDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -120,9 +121,19 @@ public class AlunoDAO {
     /**
      * TESTE 8 - Complete o metodo com a operação JPA solicitada
      */
-    public List findAlunosAndArmariosByNomeAndAnoLetivo(String nome, int anoLetivo) {
+    public List<AlunoDTO> findAlunosAndArmariosByNomeAndAnoLetivo(String nome, int anoLetivo) {
 
-        return null;
+        String query = """
+                select new AlunoDTO(a.nome, a.armario.numero)
+                from Aluno a
+                WHERE a.nome like :nome AND a.anoLetivo = :anoLetivo
+                ORDER BY a.nome, a.anoLetivo
+                """;
+
+        return this.manager.createQuery(query, AlunoDTO.class)
+                .setParameter("nome", "%" + nome + "%")
+                .setParameter("anoLetivo", anoLetivo)
+                .getResultList();
     }
 
 }
