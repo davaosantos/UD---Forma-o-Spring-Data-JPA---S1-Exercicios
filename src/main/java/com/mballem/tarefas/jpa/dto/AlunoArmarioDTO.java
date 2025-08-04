@@ -1,12 +1,12 @@
 package com.mballem.tarefas.jpa.dto;
 
-public class AlunoDTO {
+public class AlunoArmarioDTO {
 
     private String nome;
 
     private Integer numero;
 
-    public AlunoDTO(String nome, Integer numero) {
+    public AlunoArmarioDTO(String nome, Integer numero) {
         this.nome = nome;
         this.numero = numero;
     }
